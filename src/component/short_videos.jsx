@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 const Short_Videos = () => {
-  const videos = Array.from({ length: 40 }, (_, i) => 
-    `https://www.w3schools.com/html/mov_bbb.mp4?vid=${i}`
-  );
+  const videos = [
+    "https://www.w3schools.com/html/mov_bbb.mp4",
+    "https://www.w3schools.com/html/movie.mp4",
+    "https://www.w3schools.com/html/horse.mp4",
+  ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

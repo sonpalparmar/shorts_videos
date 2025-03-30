@@ -5,6 +5,7 @@ import './styles.css';
 const Short_Videos = () => {
   // Enhanced video collection with titles and categories
   const videos = [
+    // Original videos
     {
       id: 1,
       url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -40,6 +41,260 @@ const Short_Videos = () => {
       url: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
       title: "Sample Clip",
       category: "Nature"
+    },
+    
+    // Additional videos
+    {
+      id: 7,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      title: "Elephants Dream",
+      category: "Animation"
+    },
+    {
+      id: 8,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      title: "For Bigger Blazes",
+      category: "Demo"
+    },
+    {
+      id: 9,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      title: "For Bigger Escapes",
+      category: "Action"
+    },
+    {
+      id: 10,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+      title: "For Bigger Fun",
+      category: "Entertainment"
+    },
+    {
+      id: 11,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+      title: "For Bigger Joyrides",
+      category: "Automotive"
+    },
+    {
+      id: 12,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      title: "For Bigger Meltdowns",
+      category: "Comedy"
+    },
+    {
+      id: 13,
+      url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      title: "Subaru Outback On Street And Dirt",
+      category: "Automotive"
+    },
+    {
+      id: 14,
+      url: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      title: "Sintel Trailer (W3C)",
+      category: "Animation"
+    },
+    {
+      id: 15,
+      url: "https://media.w3.org/2010/05/bunny/trailer.mp4",
+      title: "Bunny Trailer",
+      category: "Animation"
+    },
+    {
+      id: 16,
+      url: "https://vjs.zencdn.net/v/oceans.mp4",
+      title: "Oceans",
+      category: "Nature"
+    },
+    {
+      id: 17,
+      url: "https://cdn.videvo.net/videvo_files/video/free/2014-08/small_watermarked/Earth_Zoom_In_preview.mp4",
+      title: "Earth Zoom In",
+      category: "Science"
+    },
+    {
+      id: 18,
+      url: "https://cdn.videvo.net/videvo_files/video/free/2013-08/small_watermarked/hd0992_preview.mp4",
+      title: "Sunset Timelapse",
+      category: "Nature"
+    },
+    {
+      id: 19,
+      url: "https://cdn.videvo.net/videvo_files/video/free/2015-09/small_watermarked/fireworks_display_preview.mp4",
+      title: "Fireworks Display",
+      category: "Entertainment"
+    },
+    {
+      id: 20,
+      url: "https://cdn.videvo.net/videvo_files/video/free/2019-11/small_watermarked/190301_1_25_11_preview.mp4",
+      title: "City Traffic",
+      category: "Urban"
+    },
+    {
+      id: 21,
+      url: "https://cdn.videvo.net/videvo_files/video/free/2019-01/small_watermarked/181015_12_003_preview.mp4",
+      title: "Abstract Liquid",
+      category: "Abstract"
+    },
+    {
+      id: 22,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4",
+      title: "Ocean Waves",
+      category: "Nature"
+    },
+    {
+      id: 23,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4",
+      title: "Forest Stream",
+      category: "Nature"
+    },
+    {
+      id: 24,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4",
+      title: "Earth from Space",
+      category: "Science"
+    },
+    {
+      id: 25,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-clouds-and-blue-sky-2408-large.mp4",
+      title: "Blue Sky",
+      category: "Nature"
+    },
+    {
+      id: 26,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-road-seen-from-the-window-of-a-moving-vehicle-13051-large.mp4",
+      title: "Road Trip",
+      category: "Travel"
+    },
+    {
+      id: 27,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubble-gum-balloon-2604-large.mp4",
+      title: "Bubble Gum",
+      category: "People"
+    },
+    {
+      id: 28,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-rain-falling-on-a-street-4256-large.mp4",
+      title: "Rainy Street",
+      category: "Weather"
+    },
+    {
+      id: 29,
+      url: "https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-range-41576-large.mp4",
+      title: "Mountain Highway",
+      category: "Travel"
+    },
+    {
+      id: 30,
+      url: "https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+      title: "We Are Going On Bullrun",
+      category: "Automotive"
+    },
+    {
+      id: 31,
+      url: "https://storage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4",
+      title: "What Car Can You Get For A Grand",
+      category: "Automotive"
+    },
+    {
+      id: 32,
+      url: "https://download.samplelib.com/mp4/sample-5s.mp4",
+      title: "Color Bars",
+      category: "Technical"
+    },
+    {
+      id: 33,
+      url: "https://download.samplelib.com/mp4/sample-10s.mp4",
+      title: "Test Pattern",
+      category: "Technical"
+    },
+    {
+      id: 34,
+      url: "https://download.samplelib.com/mp4/sample-15s.mp4",
+      title: "Countdown Timer",
+      category: "Technical"
+    },
+    {
+      id: 35,
+      url: "https://ia600208.us.archive.org/2/items/ToS-Blender/ToS-OpenMovie-Blender.mp4",
+      title: "Tears of Steel (Archive)",
+      category: "Sci-Fi"
+    },
+    {
+      id: 36,
+      url: "https://ia800501.us.archive.org/34/items/sintel-movie/sintel-movie.mp4",
+      title: "Sintel Full Movie",
+      category: "Animation"
+    },
+    {
+      id: 37,
+      url: "https://ia801302.us.archive.org/1/items/ElephantsDream/ed_hd.mp4",
+      title: "Elephants Dream Full",
+      category: "Animation"
+    },
+    {
+      id: 38,
+      url: "https://ia800707.us.archive.org/24/items/BigBuckBunny_310/big_buck_bunny_640_360.mp4",
+      title: "Big Buck Bunny 360p",
+      category: "Animation"
+    },
+    {
+      id: 39,
+      url: "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
+      title: "Popeye for President",
+      category: "Classic"
+    },
+    {
+      id: 40,
+      url: "https://archive.org/download/CartoonClassics/Krazy_Kat_-_Keeping_Up_With_Krazy.mp4",
+      title: "Krazy Kat - Keeping Up With Krazy",
+      category: "Classic"
+    },
+    {
+      id: 41,
+      url: "https://archive.org/download/sita_sings_the_blues/sitasingstheblues_mid.mp4",
+      title: "Sita Sings the Blues",
+      category: "Animation"
+    },
+    {
+      id: 42,
+      url: "https://ia801609.us.archive.org/12/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4",
+      title: "Rick Astley - Never Gonna Give You Up",
+      category: "Music"
+    },
+    {
+      id: 43,
+      url: "https://archive.org/download/Charlie_Chaplin_film_footage/TheRink.mp4",
+      title: "Charlie Chaplin - The Rink",
+      category: "Classic"
+    },
+    {
+      id: 44,
+      url: "https://ia800300.us.archive.org/17/items/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+      title: "Big Buck Bunny 720p Surround",
+      category: "Animation"
+    },
+    {
+      id: 45,
+      url: "https://filesamples.com/samples/video/mp4/sample_1280x720.mp4",
+      title: "Sample Video 720p",
+      category: "Demo"
+    },
+    {
+      id: 46,
+      url: "https://filesamples.com/samples/video/mp4/sample_960x540.mp4",
+      title: "Sample Video 540p",
+      category: "Demo"
+    },
+    {
+      id: 47,
+      url: "https://filesamples.com/samples/video/mp4/sample_960x400.mp4",
+      title: "Sample Video Widescreen",
+      category: "Demo"
+    },
+    {
+      id: 48,
+      url: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
+      title: "Learning Container Sample",
+      category: "Education"
     }
   ];
 
@@ -167,7 +422,7 @@ const Short_Videos = () => {
       <h1 className="title">Trending Shorts</h1>
       
       {/* Category filter */}
-      <div className="category-filter">
+      {/* <div className="category-filter">
         {categories.map(category => (
           <button
             key={category}
@@ -177,7 +432,7 @@ const Short_Videos = () => {
             {category}
           </button>
         ))}
-      </div>
+      </div> */}
       
       {/* Video container */}
       <div ref={containerRef} className="video-container">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import platform from 'platform';
 import Short_Videos from './component/short_videos';
@@ -86,9 +86,36 @@ const App = () => {
     getUserInfo();
   }, []);
 
-  return <>
-  <Short_Videos/>
-  </>;
+  return (
+    <div style={{
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      <header style={{
+        backgroundColor: '#333',
+        color: 'white',
+        padding: '1rem',
+        textAlign: 'center',
+        marginBottom: '1rem'
+      }}>
+        <h1 style={{ margin: 0 }}>ShortVids</h1>
+        <p style={{ margin: '0.5rem 0 0' }}>Watch and share amazing short videos</p>
+      </header>
+      
+      <main>
+        <Short_Videos />
+      </main>
+      
+      <footer style={{
+        backgroundColor: '#333',
+        color: 'white',
+        padding: '1rem',
+        textAlign: 'center',
+        marginTop: '2rem'
+      }}>
+        <p style={{ margin: 0 }}>© 2025 ShortVids - All rights reserved</p>
+      </footer>
+    </div>
+  );
 };
 
 export default App;
